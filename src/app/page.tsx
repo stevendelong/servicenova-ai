@@ -1,7 +1,51 @@
-import React from 'react';
-import { PhoneMissed, CalendarCheck, MessageSquare, BarChart3, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+'use client'
+
+import React, { useState } from 'react';
+import { PhoneMissed, CalendarCheck, MessageSquare, BarChart3, ArrowRight, ShieldCheck, CheckCircle2, X, Loader2 } from 'lucide-react';
+
+type Plan = 'platform' | 'growth' | 'premium'
+
+const PLAN_LABELS: Record<Plan, { name: string; price: string }> = {
+  platform: { name: 'Platform Access', price: '$297/mo' },
+  growth:   { name: 'AI Growth Engine', price: '$997/mo' },
+  premium:  { name: 'Premium Growth', price: '$1,997/mo' },
+}
 
 export default function LandingPage() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState<Plan>('growth')
+  const [form, setForm] = useState({ name: '', email: '', company: '' })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const openCheckout = (plan: Plan) => {
+    setSelectedPlan(plan)
+    setError('')
+    setModalOpen(true)
+  }
+
+  const handleCheckout = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, plan: selectedPlan }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setError(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setError('Network error. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <div className="min-h-screen bg-[#0f1115] text-slate-50 font-sans selection:bg-brand-500 selection:text-white">
       {/* Navbar */}
@@ -183,7 +227,7 @@ export default function LandingPage() {
                   <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400"/> Weekly AI Reports</li>
                 </ul>
               </div>
-              <button className="w-full py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors border border-slate-700">Select Plan</button>
+              <button onClick={() => openCheckout('platform')} className="w-full py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors border border-slate-700">Select Plan</button>
             </div>
 
             {/* Growth Engine - Main */}
@@ -205,7 +249,7 @@ export default function LandingPage() {
                   <li className="flex items-center gap-2 text-sm text-white"><CheckCircle2 className="w-4 h-4 text-brand-400"/> Review Generation</li>
                 </ul>
               </div>
-              <button className="w-full py-3 rounded-full bg-brand-500 hover:bg-brand-400 text-white font-bold transition-colors shadow-lg">Start 30-Day Guarantee</button>
+              <button onClick={() => openCheckout('growth')} className="w-full py-3 rounded-full bg-brand-500 hover:bg-brand-400 text-white font-bold transition-colors shadow-lg">Start 30-Day Guarantee</button>
             </div>
 
             {/* Premium */}
@@ -223,7 +267,7 @@ export default function LandingPage() {
                   <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-brand-400"/> Dedicated Account Manager</li>
                 </ul>
               </div>
-              <button className="w-full py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors border border-slate-700">Select Plan</button>
+              <button onClick={() => openCheckout('premium')} className="w-full py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors border border-slate-700">Select Plan</button>
             </div>
           </div>
         </div>
@@ -258,6 +302,78 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+      {/* Checkout Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={() => !loading && setModalOpen(false)}>
+          <div className="w-full max-w-md bg-[#0f1115] border border-white/10 rounded-3xl p-8 shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h2 className="text-2xl font-bold text-white">Get Started</h2>
+                <p className="text-slate-400 text-sm mt-1">
+                  {PLAN_LABELS[selectedPlan].name} — <span className="text-brand-400 font-semibold">{PLAN_LABELS[selectedPlan].price}</span>
+                </p>
+              </div>
+              <button onClick={() => setModalOpen(false)} disabled={loading} className="text-slate-500 hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCheckout} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Full Name *</label>
+                <input
+                  required
+                  type="text"
+                  value={form.name}
+                  onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
+                  placeholder="Jane Smith"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500 transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Business Email *</label>
+                <input
+                  required
+                  type="email"
+                  value={form.email}
+                  onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
+                  placeholder="you@yourbusiness.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500 transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Business Name</label>
+                <input
+                  type="text"
+                  value={form.company}
+                  onChange={e => setForm(p => ({ ...p, company: e.target.value }))}
+                  placeholder="ABC Plumbing LLC"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500 transition-colors"
+                />
+              </div>
+
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+                  <p className="text-red-400 text-sm">{error}</p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-brand-500 hover:bg-brand-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-full transition-all shadow-lg flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <><Loader2 className="w-4 h-4 animate-spin" /> Redirecting to Checkout…</>
+                ) : (
+                  <>Proceed to Secure Checkout →</>
+                )}
+              </button>
+              <p className="text-center text-slate-600 text-xs">🔒 Secured by Stripe · Cancel anytime</p>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
