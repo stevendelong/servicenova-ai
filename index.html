@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ServiceNova AI - AI that books jobs 24/7</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --brand-50: #eef2ff;
+      --brand-100: #e0e7ff;
+      --brand-200: #c7d2fe;
+      --brand-300: #a5b4fc;
+      --brand-400: #818cf8;
+      --brand-500: #6366f1;
+      --brand-600: #4f46e5;
+      --brand-700: #4338ca;
+      --brand-800: #3730a3;
+      --brand-900: #312e81;
+      --brand-950: #1e1b4b;
+    }
+
+    body {
+      background-color: #0f1115;
+      color: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background-color: var(--brand-500);
+      color: white;
+    }
+
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen selection:bg-brand-500 selection:text-white">
+  
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 glass-panel border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
+          </div>
+          <span class="text-xl font-bold tracking-tight text-white">ServiceNova <span class="text-brand-400">AI</span></span>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <a href="#features" class="hover:text-white transition-colors">Features</a>
+          <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+        </div>
+        <div>
+          <button class="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-brand-500/25">
+            Book a Demo
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <!-- Subtle background glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-600/20 rounded-full blur-[120px] opacity-50 pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20 text-sm font-medium mb-8">
+        <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse"></span>
+        Now onboarding HVAC & Plumbing businesses
+      </div>
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">
+        AI that books jobs <br />
+        <span class="text-brand-400">24/7.</span>
+      </h1>
+      <p class="mt-4 text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+        Turn every missed call into a booked job. ServiceNova AI is the proprietary engine that catches leads, answers FAQs, and fills your calendar—without hiring more staff.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <button class="w-full sm:w-auto bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)]">
+          Get 15 Booked Jobs Guaranteed <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+        </button>
+        <button class="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all border border-slate-700">
+          See How It Works
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Problem / Agitation -->
+  <section class="py-20 bg-slate-900 border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">Every missed call is a competitor's win.</h2>
+          <p class="text-lg text-slate-400 mb-8">
+            Home service companies lose 40% to 70% of inbound leads because they are out on a job, understaffed, or simply unable to answer the phone in time. When an AC breaks in July, customers don't leave voicemails—they call the next company on Google.
+          </p>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 shrink-0"></i>
+              <span class="text-slate-300">Catch 100% of inbound text & voice leads instantly.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 shrink-0"></i>
+              <span class="text-slate-300">Qualify urgency, location, and issue autonomously.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 shrink-0"></i>
+              <span class="text-slate-300">Put ready-to-buy customers directly on your dispatch calendar.</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="glass-panel p-8 rounded-2xl relative">
+          <div class="absolute -top-4 -right-4 w-24 h-24 bg-red-500/20 rounded-full blur-[40px] pointer-events-none"></div>
+          <div class="flex flex-col gap-6">
+            <!-- Mock Chat UI for Missed Call -->
+            <div class="flex flex-col gap-2">
+              <div class="text-xs text-slate-500 font-medium tracking-wider mb-2 text-center uppercase">Missed Call from (555) 019-3824</div>
+              <div class="bg-slate-800 p-4 rounded-2xl rounded-tl-sm self-start max-w-[85%] border border-slate-700">
+                <p class="text-sm">Hi, this is ServiceNova AI for Elite Air. We noticed we missed your call. How can we help you today?</p>
+              </div>
+              <div class="bg-brand-600 p-4 rounded-2xl rounded-tr-sm self-end max-w-[85%]">
+                <p class="text-sm">My AC is leaking water heavily and stopped cooling. Can you send someone today?</p>
+              </div>
+              <div class="bg-slate-800 p-4 rounded-2xl rounded-tl-sm self-start max-w-[85%] border border-slate-700">
+                <p class="text-sm">I can dispatch an emergency tech between 2PM - 4PM today. It's a $79 dispatch fee. Should I book this for you?</p>
+              </div>
+              <div class="bg-brand-600 p-4 rounded-2xl rounded-tr-sm self-end max-w-[85%]">
+                <p class="text-sm">Yes please, ASAP.</p>
+              </div>
+              <div class="bg-slate-800 p-4 rounded-2xl rounded-tl-sm self-start max-w-[85%] border border-emerald-500/30">
+                <p class="text-sm text-emerald-400 font-medium flex items-center gap-2"><i data-lucide="calendar-check" class="w-4 h-4 mr-1"></i> Appointment Confirmed for 2PM.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Four AI Modules (Features) -->
+  <section id="features" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">A complete intelligence layer.</h2>
+        <p class="text-lg text-slate-400">We don't just provide an answering service. ServiceNova AI is a four-engine system designed to run on top of GoHighLevel, ServiceTitan, or Jobber.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Feature 1 -->
+        <div class="glass-panel p-8 rounded-3xl hover:border-brand-500/50 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-brand-500/20 flex items-center justify-center mb-6">
+            <i data-lucide="phone-missed" class="w-6 h-6 text-brand-400"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-3">AI Lead Conversion</h3>
+          <p class="text-slate-400 leading-relaxed mb-6">Responds to new leads instantly across SMS and web chat. Qualifies them with dynamic questions, handles basic objections, and delivers instant quoting if required.</p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="glass-panel p-8 rounded-3xl hover:border-brand-500/50 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-6">
+            <i data-lucide="calendar-check" class="w-6 h-6 text-emerald-400"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-3">AI Appointment Setter</h3>
+          <p class="text-slate-400 leading-relaxed mb-6">Syncs directly with your dispatch calendar. Books jobs, reschedules appointments, sends courtesy reminders, and handles after-hours emergency calls flawlessly.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-panel p-8 rounded-3xl hover:border-brand-500/50 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-6">
+            <i data-lucide="message-square" class="w-6 h-6 text-blue-400"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-3">AI Customer Service</h3>
+          <p class="text-slate-400 leading-relaxed mb-6">Automates FAQs, warranty inquiries, and maintenance reminders. Politely follows up after jobs are completed to secure 5-star Google reviews on autopilot.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass-panel p-8 rounded-3xl hover:border-brand-500/50 transition-colors relative overflow-hidden">
+           <!-- Shine effect -->
+           <div class="absolute top-0 right-0 p-4">
+              <span class="px-3 py-1 text-xs font-semibold bg-brand-500 text-white rounded-full shadow-lg">Our SaaS Platform</span>
+           </div>
+          <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6">
+            <i data-lucide="bar-chart-3" class="w-6 h-6 text-purple-400"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-3">ServiceNova Dashboard</h3>
+          <p class="text-slate-400 leading-relaxed mb-6">Your proprietary reporting engine. Track lead sources, AI conversion rates, technician performance, and revenue projections securely in one place.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-24 bg-slate-900 border-y border-white/5 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-4xl font-bold mb-4">Priced for maximum ROI.</h2>
+        <p class="text-xl text-slate-400">One booked install pays for your entire system.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- SaaS Only -->
+        <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between border-slate-700 hover:border-slate-500 transition-colors">
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-slate-300">Platform Access</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-4xl font-bold">$297</span>
+              <span class="text-slate-400">/mo</span>
+            </div>
+            <p class="text-sm text-slate-400 mb-6">For companies with established front-desk teams that just need the reporting layer.</p>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center gap-2 text-sm text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> ServiceNova Dashboard</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> CRM Syncing</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> Weekly AI Reports</li>
+            </ul>
+          </div>
+          <button class="w-full py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors border border-slate-700">Select Plan</button>
+        </div>
+
+        <!-- Growth Engine - Main -->
+        <div class="p-8 rounded-3xl flex flex-col justify-between bg-gradient-to-b from-brand-900 to-[#0f1115] border-2 border-brand-500 relative transform md:-translate-y-4 shadow-2xl shadow-brand-500/20">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <span class="bg-brand-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Most Popular</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-white">AI Growth Engine</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-4xl font-bold text-white">$997</span>
+              <span class="text-brand-200">/mo</span>
+            </div>
+            <p class="text-sm text-brand-200 mb-6">The complete AI operating system replacing call centers and manual follow-up.</p>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center gap-2 text-sm text-white"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> <b>Everything in Platform</b></li>
+              <li class="flex items-center gap-2 text-sm text-white"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> AI Lead Conversion Engine</li>
+              <li class="flex items-center gap-2 text-sm text-white"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> AI Appointment Setter</li>
+              <li class="flex items-center gap-2 text-sm text-white"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> Review Generation</li>
+            </ul>
+          </div>
+          <button class="w-full py-3 rounded-full bg-brand-500 hover:bg-brand-400 text-white font-bold transition-colors shadow-lg">Start 30-Day Guarantee</button>
+        </div>
+
+        <!-- Premium -->
+        <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between border-slate-700 hover:border-slate-500 transition-colors">
+          <div>
+            <h3 class="text-xl font-semibold mb-2 text-slate-300">Premium Growth</h3>
+            <div class="flex items-baseline gap-2 mb-6">
+              <span class="text-4xl font-bold">$1,997</span>
+              <span class="text-slate-400">/mo</span>
+            </div>
+            <p class="text-sm text-slate-400 mb-6">The ultimate done-for-you package including top-tier paid traffic management.</p>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center gap-2 text-sm text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> <b>Everything in Growth</b></li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> Google Local Services Ads</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><i data-lucide="check-circle-2" class="w-4 h-4 text-brand-400"></i> Dedicated Account Manager</li>
+            </ul>
+          </div>
+          <button class="w-full py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors border border-slate-700">Select Plan</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guarantee Section -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-4 relative z-10">
+      <div class="bg-gradient-to-r from-brand-900 to-indigo-900 border border-brand-500/30 rounded-3xl p-10 md:p-14 text-center shadow-2xl">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white">The Ironclad Guarantee</h2>
+        <p class="text-xl text-brand-100 mb-8 max-w-2xl mx-auto">
+          We don't get paid to build bots. We get paid to pack your schedule. **If ServiceNova AI does not book you at least 15 jobs in your first 30 days, you don't pay us a dime.**
+        </p>
+        <button class="bg-white text-brand-900 hover:bg-slate-100 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-lg">
+          Book Your Setup Call
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t border-white/5 bg-[#0a0c0f]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2 opacity-80">
+        <i data-lucide="shield-check" class="w-5 h-5 text-brand-400"></i>
+        <span class="text-lg font-bold tracking-tight text-white">ServiceNova <span class="text-brand-400">AI</span></span>
+      </div>
+      <div class="text-slate-500 flex gap-6 text-sm">
+        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+        <span>&copy; <script>document.write(new Date().getFullYear())</script> ServiceNova AI. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
