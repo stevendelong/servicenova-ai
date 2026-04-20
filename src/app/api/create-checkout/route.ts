@@ -11,9 +11,7 @@ export const dynamic = 'force-dynamic'
 // NEXT_PUBLIC_SITE_URL           = https://servicenova.ai OR your Vercel URL
 // ─────────────────────────────────────────────────────────────────────────────
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
-})
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 const PLAN_PRICE_MAP: Record<string, string> = {
   platform: process.env.STRIPE_PLATFORM_PRICE_ID!,   // $297/mo
