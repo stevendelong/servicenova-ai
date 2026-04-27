@@ -64,7 +64,7 @@ export default function LandingPage() {
               <a href="#contact" className="hover:text-white transition-colors">Contact</a>
             </div>
             <div>
-              <button className="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-brand-500/25">
+              <button onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })} className="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-brand-500/25">
                 Book a Demo
               </button>
             </div>
@@ -90,10 +90,10 @@ export default function LandingPage() {
             Turn every missed call into a booked job. ServiceNova AI is the proprietary engine that catches leads, answers FAQs, and fills your calendar—without hiring more staff.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <button className="w-full sm:w-auto bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)]">
+            <button onClick={() => openCheckout('growth')} className="w-full sm:w-auto bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)]">
               Get 15 Booked Jobs Guaranteed <ArrowRight className="w-5 h-5" />
             </button>
-            <button className="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all border border-slate-700">
+            <button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })} className="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all border border-slate-700">
               See How It Works
             </button>
           </div>
@@ -281,7 +281,7 @@ export default function LandingPage() {
             <p className="text-xl text-brand-100 mb-8 max-w-2xl mx-auto">
               We don't get paid to build bots. We get paid to pack your schedule. <strong>If ServiceNova AI does not book you at least 15 jobs in your first 30 days, you don't pay us a dime.</strong>
             </p>
-            <button className="bg-white text-brand-900 hover:bg-slate-100 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-lg">
+            <button onClick={() => openCheckout('growth')} className="bg-white text-brand-900 hover:bg-slate-100 px-8 py-4 rounded-full text-lg font-bold transition-all shadow-lg">
               Book Your Setup Call
             </button>
           </div>
