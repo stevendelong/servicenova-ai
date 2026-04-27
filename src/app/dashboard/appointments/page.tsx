@@ -1,13 +1,32 @@
-import React from 'react';
-import { Calendar as CalendarIcon, Clock, User, Phone, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+'use client'
+
+import React, { useEffect, useState } from 'react';
+import { Calendar as CalendarIcon, Clock, User, Phone, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, Plus, Loader2 } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
 
 export default function AppointmentsPage() {
-  const appointments = [
-    { id: 1, customer: 'John Doe', service: 'Emergency AC Repair', date: 'Today', time: '2:00 PM', status: 'Confirmed', price: '$79 Dispatch' },
-    { id: 2, customer: 'Jane Smith', service: 'HVAC Maintenance', date: 'Tomorrow', time: '10:00 AM', status: 'Pending', price: '$129' },
-    { id: 3, customer: 'Robert Brown', service: 'Duct Cleaning', date: 'Apr 21', time: '9:00 AM', status: 'Confirmed', price: '$299' },
-    { id: 4, customer: 'Alice White', service: 'Furnace Inspection', date: 'Apr 22', time: '1:30 PM', status: 'Confirmed', price: '$89' },
-  ];
+  const { isLoaded, user } = useUser();
+  const [appointments, setAppointments] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isLoaded && user) {
+      fetch('/api/ghl/appointments')
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            setError(data.error);
+          } else {
+            setAppointments(data.appointments || []);
+          }
+        })
+        .catch(() => setError('Failed to load appointments.'))
+        .finally(() => setIsLoading(false));
+    } else if (isLoaded && !user) {
+      setIsLoading(false);
+    }
+  }, [isLoaded, user]);
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -32,7 +51,7 @@ export default function AppointmentsPage() {
           <div className="glass-panel p-6 rounded-2xl border-white/5">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <CalendarIcon className="w-5 h-5 text-brand-400" /> April 2026
+                <CalendarIcon className="w-5 h-5 text-brand-400" /> {new Date().toLocaleDateString('default', { month: 'long', year: 'numeric' })}
               </h2>
               <div className="flex gap-2">
                 <button className="p-2 rounded-lg hover:bg-white/5 transition-colors text-slate-400 border border-white/5">
@@ -55,8 +74,9 @@ export default function AppointmentsPage() {
             <div className="grid grid-cols-7 gap-2">
               {Array.from({ length: 30 }).map((_, i) => {
                 const day = i + 1;
-                const isToday = day === 19;
-                const hasAppt = [19, 20, 21, 22, 25, 28].includes(day);
+                // Basic mock calendar visualization for now
+                const isToday = day === new Date().getDate();
+                const hasAppt = false; // We'd map this to real appointments if needed
                 
                 return (
                   <div 
@@ -79,42 +99,49 @@ export default function AppointmentsPage() {
             </div>
           </div>
 
-          <div className="glass-panel overflow-hidden rounded-2xl border-white/5">
+          <div className="glass-panel overflow-hidden rounded-2xl border-white/5 min-h-[200px] flex flex-col">
              <div className="p-6 border-b border-white/5 bg-slate-900/50">
                 <h2 className="text-sm font-bold text-white uppercase tracking-wider">Upcoming Jobs</h2>
              </div>
-             <div className="divide-y divide-white/5">
-                {appointments.map((appt) => (
-                  <div key={appt.id} className="p-4 hover:bg-white/5 transition-colors flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center border font-bold text-xs ${
-                        appt.status === 'Confirmed' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                      }`}>
-                        {appt.customer.split(' ').map(n => n[0]).join('')}
+             
+             {isLoading ? (
+                <div className="flex-1 flex items-center justify-center p-8">
+                  <Loader2 className="w-8 h-8 text-brand-500 animate-spin" />
+                </div>
+             ) : error ? (
+                <div className="flex-1 flex items-center justify-center p-8 text-slate-400">
+                  {error}
+                </div>
+             ) : appointments.length > 0 ? (
+               <div className="divide-y divide-white/5">
+                  {appointments.map((appt) => (
+                    <div key={appt.id} className="p-4 hover:bg-white/5 transition-colors flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center border font-bold text-xs bg-emerald-500/10 border-emerald-500/20 text-emerald-400`}>
+                          {appt.contactName.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-white">{appt.contactName}</p>
+                          <p className="text-xs text-slate-400">{appt.title}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-bold text-white">{appt.customer}</p>
-                        <p className="text-xs text-slate-400">{appt.service}</p>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-white">{new Date(appt.startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                        <p className="text-xs text-slate-500">{new Date(appt.startTime).toLocaleDateString()}</p>
+                      </div>
+                      <div className="hidden sm:flex items-center gap-2">
+                        <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-wider">
+                          <CheckCircle2 className="w-3 h-3" /> {appt.status}
+                        </span>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-white">{appt.time}</p>
-                      <p className="text-xs text-slate-500">{appt.date}</p>
-                    </div>
-                    <div className="hidden sm:flex items-center gap-2">
-                       {appt.status === 'Confirmed' ? (
-                          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-wider">
-                            <CheckCircle2 className="w-3 h-3" /> {appt.status}
-                          </span>
-                       ) : (
-                          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-500 text-[10px] font-bold uppercase tracking-wider">
-                            <AlertCircle className="w-3 h-3" /> {appt.status}
-                          </span>
-                       )}
-                    </div>
-                  </div>
-                ))}
-             </div>
+                  ))}
+               </div>
+             ) : (
+                <div className="flex-1 flex items-center justify-center p-8 text-sm text-slate-500">
+                  No upcoming appointments found.
+                </div>
+             )}
           </div>
         </div>
 
@@ -124,19 +151,18 @@ export default function AppointmentsPage() {
               <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Dispatch Summary</h3>
               <div className="space-y-6">
                  <div>
-                    <p className="text-xs text-slate-500 font-medium mb-1">Today's Load</p>
+                    <p className="text-xs text-slate-500 font-medium mb-1">Upcoming Jobs (30 Days)</p>
                     <div className="flex items-end gap-2">
-                       <span className="text-2xl font-bold text-white">8 Jobs</span>
-                       <span className="text-emerald-400 text-xs font-semibold mb-1">+2 from yesterday</span>
+                       <span className="text-2xl font-bold text-white">{appointments.length} Jobs</span>
                     </div>
                  </div>
-                 <div>
+                 {/* <div>
                     <p className="text-xs text-slate-500 font-medium mb-1">AI Utilization</p>
                     <p className="text-2xl font-bold text-white">92%</p>
                     <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
                        <div className="bg-brand-500 h-full w-[92%] rounded-full shadow-[0_0_10px_rgba(79,70,229,0.5)]"></div>
                     </div>
-                 </div>
+                 </div> */}
               </div>
            </div>
 

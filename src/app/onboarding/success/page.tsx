@@ -21,7 +21,7 @@ export default function OnboardingSuccessPage() {
     {
       icon: <Zap className="w-5 h-5 text-brand-400" />,
       title: 'AI Engine Provisioned',
-      desc: 'We will configure your AI workflows in GoHighLevel.',
+      desc: 'We are linking your new AI engine to your ServiceNova dashboard.',
     },
     {
       icon: <MessageSquare className="w-5 h-5 text-brand-400" />,

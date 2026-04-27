@@ -4,9 +4,11 @@ import React from 'react';
 import { LayoutDashboard, Users, Calendar, MessageSquare, Settings, LogOut, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useClerk } from '@clerk/nextjs';
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { signOut } = useClerk();
 
   const navItems = [
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
@@ -53,7 +55,10 @@ export function Sidebar() {
           <Settings className="w-5 h-5" />
           Settings
         </Link>
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition-colors">
+        <button
+          onClick={() => signOut({ redirectUrl: '/' })}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+        >
           <LogOut className="w-5 h-5" />
           Sign Out
         </button>
